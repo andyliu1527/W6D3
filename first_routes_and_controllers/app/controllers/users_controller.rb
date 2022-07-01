@@ -1,9 +1,21 @@
 class UsersController < ApplicationController
+    # def index
+    #     @users = User.all
+    #     render json: @users
+    #     # render plain: "I'm in the index action!"
+    # end
+
     def index
-        @users = User.all
-        render json: @users
-        # render plain: "I'm in the index action!"
+        if params.has_key?(:artist_id)
+            @artworks = Artwork.where(artist_id: params[:id] )
+        else
+            @artworks = Artwork.all
+        end
+
+        render json: @artworks
     end
+
+
     #rendor returns the data in json format?
     def show
         @user = User.find(params[:id])
@@ -40,6 +52,6 @@ class UsersController < ApplicationController
     #users params method to find the username out of user?
     #makes things eaiser by making another method instead of writing it out every time
     def user_params
-        params.require(:user).permit(:name, :email)        
+        params.require(:user).permit(:username)        
     end
 end
